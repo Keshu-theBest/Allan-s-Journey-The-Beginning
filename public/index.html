@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#153d34">
+  <meta name="description" content="Read the room. Play your hand. A multiplayer card game of collective guesses, quiet alliances, and game theory. Play with 2–160 friends or practice against bots.">
+  <title>Common Suit — Read the room.</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Common Suit home"><span class="brand-mark" aria-hidden="true">♣</span><span>common suit<span class="brand-dot">.</span></span></a>
+    <nav aria-label="Main navigation"><button class="text-button" id="rules-nav">How to play <span aria-hidden="true">→</span></button><span class="header-note">A GAME OF PEOPLE</span></nav>
+  </header>
+  <main id="app"></main>
+  <footer class="site-footer"><span>THE ODDS ARE HUMAN.</span><span>2–160 players <span class="footer-dot">·</span> 6 rounds <span class="footer-dot">·</span> No downloads</span><span class="footer-suits" aria-hidden="true">♠ <b>♥ ♦</b> ♣</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="rules-dialog" aria-labelledby="rules-title">
+    <div class="dialog-top"><span class="eyebrow">THE TABLE RULES · VERSION 1</span><button class="icon-button" id="close-rules" aria-label="Close rules">×</button></div>
+    <div class="rules-content">
+      <h2 id="rules-title">A little strategy.<br>A lot of other people.</h2>
+      <p class="rules-intro">Pick one number and one suit. Everyone chooses in secret. Your score depends on what the whole table chooses.</p>
+      <ol class="rules-steps">
+        <li><h3>Six rounds. One card each.</h3><p>Choose a number from <strong>2 to 10</strong> and any of the four suits. Aces and face cards are excluded. You have <strong>30 seconds</strong> per round. A locked card cannot change. Each number can be used <strong>only once per match</strong>; suits can be reused. Multiple players can choose the same card.</p></li>
+        <li><h3>Aim below the average.</h3><p>For the cards submitted this round, let <strong>A</strong> be the average number. Your target is:</p><div class="formula">T = 2 + ⅔ × (A − 2)</div><p>For your chosen number <strong>v</strong>, earn:</p><div class="formula">Number points = max(0, 60 − 10 × |v − T|)</div><p>The closer you are to the target, the more you earn. Your own card is included in the average. Save useful low cards for later rounds.</p></li>
+        <li><h3>Find the common suit.</h3><p>The most selected suit earns <strong>24 suit points</strong>. Its other suit of the same color earns <strong>12</strong>; the opposite color earns <strong>0</strong>. Hearts and diamonds are red; clubs and spades are black.</p><p><strong>Tied most popular suits:</strong> calculate this bonus against each tied suit, then take the average. There is no random tie-break.</p></li>
+        <li><h3>The crowd comes at a cost.</h3><p>If <strong>n</strong> players submitted and <strong>c</strong> chose your exact suit:</p><div class="formula">Crowding penalty = 18 × (c − 1) / (n − 1)</div><p>The penalty is 0 when n ≤ 1. Being in the majority can pay, but a packed suit dilutes that reward.</p><div class="formula">Round score = number points + suit points − crowding penalty</div><p>Round scores can be negative. Round the final round score to 2 decimal places. The highest sum after six rounds wins. Equal totals share a rank.</p></li>
+        <li><h3>Miss the clock, lose 15.</h3><p>No card by the deadline means <strong>−15 points</strong>. No number is spent, and you are excluded from that round’s average and suit counts. If nobody submits, everyone loses 15. Disconnecting does not pause the match; return in the same browser to reconnect. Leaving forfeits your seat, and missed future rounds cost 15 points each.</p></li>
+      </ol>
+      <div class="example"><span class="eyebrow">ONE ROUND, EXPLAINED</span><p>The table plays <strong>10♥, 7♦, 6♦, 5♠</strong>. Average: <strong>7</strong>. Target: <strong>5⅓</strong>. Diamonds are most popular.</p><p>Your <strong>10♥</strong> earns 13⅓ number points + 12 suit points − 0 crowding penalty = <strong>25.33 points</strong>.</p></div>
+      <p class="fine-print">Choices are revealed together when everyone locks in or time runs out. Reveals last 8 seconds before the next round. Games need 2–160 players; practice adds seven bots. This is a game of strategic prediction, with no stakes, betting, or real-money rewards. Rooms are temporary and reset when the server restarts.</p>
+    </div>
+    <div class="dialog-bottom"><button class="button primary" id="accept-rules">I understand the rules <span aria-hidden="true">→</span></button></div>
+  </dialog>
+</body>
+</html>
